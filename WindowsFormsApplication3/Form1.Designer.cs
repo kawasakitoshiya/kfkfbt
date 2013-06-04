@@ -48,7 +48,6 @@
             this.AD_3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AD_4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.I2C = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rcvTextBox = new System.Windows.Forms.TextBox();
             this.connectButton = new System.Windows.Forms.Button();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.export = new System.Windows.Forms.Button();
@@ -63,12 +62,25 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.startButton = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.d_password = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.d_version = new System.Windows.Forms.TextBox();
+            this.d_branch = new System.Windows.Forms.TextBox();
+            this.d_projectkey = new System.Windows.Forms.TextBox();
+            this.d_email = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btn_direct = new System.Windows.Forms.Button();
             this.grpSetting.SuspendLayout();
             this.grpSend.SuspendLayout();
             this.grpRecv.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Table)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpSetting
@@ -115,6 +127,7 @@
             this.sndTextBox.Name = "sndTextBox";
             this.sndTextBox.Size = new System.Drawing.Size(1179, 91);
             this.sndTextBox.TabIndex = 1;
+            this.sndTextBox.TextChanged += new System.EventHandler(this.sndTextBox_TextChanged);
             // 
             // sndButton
             // 
@@ -130,8 +143,7 @@
             // grpRecv
             // 
             this.grpRecv.Controls.Add(this.Table);
-            this.grpRecv.Controls.Add(this.rcvTextBox);
-            this.grpRecv.Location = new System.Drawing.Point(11, 348);
+            this.grpRecv.Location = new System.Drawing.Point(11, 527);
             this.grpRecv.Margin = new System.Windows.Forms.Padding(4);
             this.grpRecv.Name = "grpRecv";
             this.grpRecv.Padding = new System.Windows.Forms.Padding(4);
@@ -224,15 +236,6 @@
             this.I2C.HeaderText = "I2C";
             this.I2C.Name = "I2C";
             // 
-            // rcvTextBox
-            // 
-            this.rcvTextBox.Location = new System.Drawing.Point(11, 20);
-            this.rcvTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.rcvTextBox.Multiline = true;
-            this.rcvTextBox.Name = "rcvTextBox";
-            this.rcvTextBox.Size = new System.Drawing.Size(1163, 10);
-            this.rcvTextBox.TabIndex = 0;
-            // 
             // connectButton
             // 
             this.connectButton.Location = new System.Drawing.Point(641, 40);
@@ -250,7 +253,7 @@
             // 
             // export
             // 
-            this.export.Location = new System.Drawing.Point(1107, 809);
+            this.export.Location = new System.Drawing.Point(1012, 968);
             this.export.Name = "export";
             this.export.Size = new System.Drawing.Size(149, 31);
             this.export.TabIndex = 4;
@@ -260,7 +263,7 @@
             // 
             // clear
             // 
-            this.clear.Location = new System.Drawing.Point(701, 809);
+            this.clear.Location = new System.Drawing.Point(709, 968);
             this.clear.Name = "clear";
             this.clear.Size = new System.Drawing.Size(104, 31);
             this.clear.TabIndex = 5;
@@ -270,7 +273,7 @@
             // 
             // stop
             // 
-            this.stop.Location = new System.Drawing.Point(901, 809);
+            this.stop.Location = new System.Drawing.Point(852, 968);
             this.stop.Name = "stop";
             this.stop.Size = new System.Drawing.Size(107, 31);
             this.stop.TabIndex = 6;
@@ -350,7 +353,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(582, 855);
+            this.label2.Location = new System.Drawing.Point(267, 975);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(309, 15);
             this.label2.TabIndex = 10;
@@ -367,11 +370,123 @@
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.d_password);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.d_version);
+            this.groupBox3.Controls.Add(this.d_branch);
+            this.groupBox3.Controls.Add(this.d_projectkey);
+            this.groupBox3.Controls.Add(this.d_email);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.btn_direct);
+            this.groupBox3.Location = new System.Drawing.Point(21, 359);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(1289, 161);
+            this.groupBox3.TabIndex = 12;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "From clooca";
+            // 
+            // d_password
+            // 
+            this.d_password.Location = new System.Drawing.Point(729, 88);
+            this.d_password.Name = "d_password";
+            this.d_password.Size = new System.Drawing.Size(246, 22);
+            this.d_password.TabIndex = 10;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(26, 139);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 15);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "version";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(23, 88);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 15);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "branch";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(29, 44);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(78, 15);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "project key";
+            // 
+            // d_version
+            // 
+            this.d_version.Location = new System.Drawing.Point(127, 133);
+            this.d_version.Name = "d_version";
+            this.d_version.Size = new System.Drawing.Size(277, 22);
+            this.d_version.TabIndex = 6;
+            // 
+            // d_branch
+            // 
+            this.d_branch.Location = new System.Drawing.Point(127, 88);
+            this.d_branch.Name = "d_branch";
+            this.d_branch.Size = new System.Drawing.Size(277, 22);
+            this.d_branch.TabIndex = 5;
+            // 
+            // d_projectkey
+            // 
+            this.d_projectkey.Location = new System.Drawing.Point(127, 37);
+            this.d_projectkey.Name = "d_projectkey";
+            this.d_projectkey.Size = new System.Drawing.Size(277, 22);
+            this.d_projectkey.TabIndex = 4;
+            // 
+            // d_email
+            // 
+            this.d_email.Location = new System.Drawing.Point(729, 51);
+            this.d_email.Name = "d_email";
+            this.d_email.Size = new System.Drawing.Size(246, 22);
+            this.d_email.TabIndex = 3;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(642, 88);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 15);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "password";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(642, 54);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(39, 15);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "email";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // btn_direct
+            // 
+            this.btn_direct.Location = new System.Drawing.Point(1190, 116);
+            this.btn_direct.Name = "btn_direct";
+            this.btn_direct.Size = new System.Drawing.Size(75, 23);
+            this.btn_direct.TabIndex = 0;
+            this.btn_direct.Text = "GET";
+            this.btn_direct.UseVisualStyleBackColor = true;
+            this.btn_direct.Click += new System.EventHandler(this.btn_direct_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1366, 879);
+            this.ClientSize = new System.Drawing.Size(1344, 1003);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -393,11 +508,12 @@
             this.grpSend.ResumeLayout(false);
             this.grpSend.PerformLayout();
             this.grpRecv.ResumeLayout(false);
-            this.grpRecv.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Table)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -411,7 +527,6 @@
         private System.Windows.Forms.TextBox sndTextBox;
         private System.Windows.Forms.Button sndButton;
         private System.Windows.Forms.GroupBox grpRecv;
-        private System.Windows.Forms.TextBox rcvTextBox;
         private System.Windows.Forms.Button connectButton;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button export;
@@ -439,6 +554,18 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox d_version;
+        private System.Windows.Forms.TextBox d_branch;
+        private System.Windows.Forms.TextBox d_projectkey;
+        private System.Windows.Forms.TextBox d_email;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn_direct;
+        private System.Windows.Forms.TextBox d_password;
     }
 }
 

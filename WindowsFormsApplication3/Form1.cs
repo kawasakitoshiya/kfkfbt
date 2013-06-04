@@ -11,7 +11,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using Codeplex.Data;
-
+using System.Net;
 
 
 namespace WindowsFormsApplication3
@@ -30,7 +30,7 @@ namespace WindowsFormsApplication3
         int tbl_cnt = 21;
         public static int LOG_SPAN = 40;
 
-        private delegate void Delegate_RcvDataToTextBox(string data);
+      
         private delegate void Delegate_RcvByteToTextBox(byte[] log);
    
 
@@ -87,7 +87,9 @@ namespace WindowsFormsApplication3
 
             // 送受信用のテキストボックスをクリアする.
             sndTextBox.Clear();
-            rcvTextBox.Clear();
+          
+
+            d_password.PasswordChar = '*';
         }
 
         /****************************************************************************/
@@ -363,15 +365,7 @@ namespace WindowsFormsApplication3
          *
          *	@retval	なし.
          */
-        private void RcvDataToTextBox(string data)
-        {
-            //! 受信データをテキストボックスの最後に追記する.
-            if (data != null)
-            {
-                rcvTextBox.AppendText(data);
-            }
-        }
-
+   
 
         private void RcvByteToTextBox(byte[] log) 
         {
@@ -395,48 +389,7 @@ namespace WindowsFormsApplication3
                 short AD_4 = BitConverter.ToInt16(log, 28);
                 int I2C = BitConverter.ToInt32(log, 30);
 
-                /*
-                rcvTextBox.AppendText(Time.ToString());
-                rcvTextBox.AppendText("T|");
-
-                rcvTextBox.AppendText(Dat1.ToString());
-                rcvTextBox.AppendText("D1|");
-
-                rcvTextBox.AppendText(Dat2.ToString());
-                rcvTextBox.AppendText("D2|");
-
-                rcvTextBox.AppendText(Batt.ToString());
-                rcvTextBox.AppendText("B|");
-
-                rcvTextBox.AppendText(Mo_A.ToString());
-                rcvTextBox.AppendText("MA|");
-
-                rcvTextBox.AppendText(Mo_B.ToString());
-                rcvTextBox.AppendText("MB|");
-
-                rcvTextBox.AppendText(Mo_C.ToString());
-                rcvTextBox.AppendText("MC|");
-
-                rcvTextBox.AppendText(AD_1.ToString());
-                rcvTextBox.AppendText("AD1|");
-
-                rcvTextBox.AppendText(AD_2.ToString());
-                rcvTextBox.AppendText("AD2|");
-
-                rcvTextBox.AppendText(AD_3.ToString());
-                rcvTextBox.AppendText("AD3|");
-
-
-                rcvTextBox.AppendText(AD_4.ToString());
-                rcvTextBox.AppendText("AD4|");
-
-
-                rcvTextBox.AppendText(I2C.ToString());
-                rcvTextBox.AppendText("I2C|\n");
-                 */
-                
-
-               // rcvTextBox.AppendText(BitConverter.ToString(log));
+        
 
                 if (I2C > -1 && I2C < 256)
                 {
@@ -458,16 +411,8 @@ namespace WindowsFormsApplication3
                 
                 }
               
-                //rcvTextBox.AppendText(log.ToString());
-                /*
-                for (int i = 0; i < log.Length; i++)
-                {
-                    rcvTextBox.AppendText(log[i].ToString());
-                    rcvTextBox.AppendText("|");
-
-                }
-                 * */
-                rcvTextBox.AppendText("\n");
+              
+           
 
             }
         }
@@ -899,6 +844,84 @@ namespace WindowsFormsApplication3
                 MessageBox.Show(ex.Message);
                 Console.WriteLine("error");
             }
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sndTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_direct_Click(object sender, EventArgs e)
+        {
+            string pkey = d_projectkey.Text;
+            string branch = d_branch.Text;
+            string version = d_version.Text;
+
+            string email = d_email.Text;
+            string pwd = d_password.Text;
+
+            if (pkey.Length == 0) {
+                MessageBox.Show("project keyを入力してください", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (email.Length == 0)
+            {
+                MessageBox.Show("emailを入力してください", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (pwd.Length == 0)
+            {
+                MessageBox.Show("パスワードを入力してください", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            /*
+            pkey = "1d99c06b3a12d02c8d595ff1b2ab342d";
+            email = "kawasakitoshiya@gmail.com";
+            pwd = "nekorin1048";
+            */
+                
+            String url = "http://www.clooca.com/api/dl/" + pkey + "?return_type=json";
+            if (branch.Length != 0) url += "&branch=" + branch;
+            if (version.Length != 0) url += "&version=" + version;
+            Console.WriteLine(url);
+      
+            //basic認証
+            WebClient myweb = new WebClient();
+            //認証情報
+            myweb.Credentials = new NetworkCredential(email, pwd);
+
+
+
+            //ダウンロード
+            try
+            {
+                byte[] pagedata = myweb.DownloadData(url);
+
+                //取得先のサイトに合わせた文字コード設定
+                Encoding ec = Encoding.UTF8;//UTF8の例
+                // Encoding ec = Encoding.GetEncoding("shift-jis");//シフトGISの例
+                Console.WriteLine(ec.GetString(pagedata));
+                var obj = DynamicJson.Parse(ec.GetString(pagedata));
+                Console.WriteLine(obj[0]["output"]);
+                cloocaTextBox.Text = obj[0]["output"];
+                genButton_Click(null,null);
+            }catch(WebException exc)
+            {
+                Console.WriteLine(exc);
+                MessageBox.Show(exc.ToString(), "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+           
+
+
 
         }
 
