@@ -1,0 +1,10 @@
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\bin\Release\WindowsFormsApplication3.exe
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\bin\Release\WindowsFormsApplication3.pdb
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\bin\Release\DynamicJson.dll
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\obj\x86\Release\WindowsFormsApplication3.Form1.resources
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\obj\x86\Release\WindowsFormsApplication3.Properties.Resources.resources
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\obj\x86\Release\WindowsFormsApplication3.exe
+C:\Users\vaio\Desktop\kfkfbt\WindowsFormsApplication3\obj\x86\Release\WindowsFormsApplication3.pdb
