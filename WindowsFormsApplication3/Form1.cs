@@ -13,6 +13,8 @@ using System.IO;
 using Codeplex.Data;
 using System.Net;
 
+using System.Threading;
+
 
 namespace WindowsFormsApplication3
 {
@@ -110,6 +112,80 @@ namespace WindowsFormsApplication3
             }
         }
 
+
+
+        delegate void connectionFinishedDelegate();
+        internal void connectionFinished() {
+            //! ボタンの表示を[接続]から[切断]に変える.
+            connectButton.Text = "切断";
+            connectLoading.Hide();
+            connectButton.Enabled = true;
+        }
+
+
+        delegate void ErrorConnectionDelegate();
+        internal void ErrorConnection()
+        {
+            //! ボタンの表示を[接続]から[切断]に変える.
+         
+            connectLoading.Hide();
+            connectButton.Enabled = true;
+        }
+
+        delegate void setPortNameDelegate();
+        internal void setPortName(){
+
+            connectLoading.Show();
+            connectButton.Enabled = false;
+            serialPort1.PortName = cmbPortName.SelectedItem.ToString();
+        }
+
+
+
+        void connect_to_nxt() {
+            //! オープンするシリアルポートをコンボボックスから取り出す.
+            Invoke(new setPortNameDelegate(setPortName));
+
+            //! ボーレートをコンボボックスから取り出す.
+
+            int BAUDRATE = 38400;
+            serialPort1.BaudRate = BAUDRATE;
+
+            //! データビットをセットする. (データビット = 8ビット)
+            serialPort1.DataBits = 8;
+            // serialPort1.DataBits = 256;
+            //! パリティビットをセットする. (パリティビット = なし)
+            serialPort1.Parity = Parity.None;
+
+            //! ストップビットをセットする. (ストップビット = 1ビット)
+            serialPort1.StopBits = StopBits.One;
+
+            serialPort1.Handshake = Handshake.None;
+
+            //! 文字コードをセットする.
+            serialPort1.Encoding = Encoding.Unicode;
+
+            try
+            {
+                //! シリアルポートをオープンする.
+                serialPort1.Open();
+
+                Invoke(new connectionFinishedDelegate(connectionFinished));
+             
+
+                receive_stop = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Invoke(new ErrorConnectionDelegate(ErrorConnection));
+            }
+           
+        
+        
+        
+        }
+
         /****************************************************************************/
         /*!
          *	@brief	[接続]/[切断]ボタンを押したときにシリアルポートのオープン/クローズを行う.
@@ -134,42 +210,8 @@ namespace WindowsFormsApplication3
             }
             else
             {
-                //! オープンするシリアルポートをコンボボックスから取り出す.
-                serialPort1.PortName = cmbPortName.SelectedItem.ToString();
-
-                //! ボーレートをコンボボックスから取り出す.
-          
-                int BAUDRATE = 38400;
-                serialPort1.BaudRate = BAUDRATE;
-
-                //! データビットをセットする. (データビット = 8ビット)
-               serialPort1.DataBits = 8;
-               // serialPort1.DataBits = 256;
-                //! パリティビットをセットする. (パリティビット = なし)
-                serialPort1.Parity = Parity.None;
-
-                //! ストップビットをセットする. (ストップビット = 1ビット)
-                serialPort1.StopBits = StopBits.One;
-
-                serialPort1.Handshake = Handshake.None;
-
-                //! 文字コードをセットする.
-                serialPort1.Encoding = Encoding.Unicode;
-
-                try
-                {
-                    //! シリアルポートをオープンする.
-                    serialPort1.Open();
-
-                    //! ボタンの表示を[接続]から[切断]に変える.
-                    connectButton.Text = "切断";
-
-                    receive_stop = false;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                Thread connectThread = new Thread(connect_to_nxt);
+                connectThread.Start();
             }
         }
 
@@ -187,7 +229,8 @@ namespace WindowsFormsApplication3
             //! シリアルポートをオープンしていない場合、処理を行わない.
             if (serialPort1.IsOpen == false)
             {
-                //return;
+                MessageBox.Show("接続されていません", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             //! テキストボックスから、送信するテキストを取り出す.
             String data = sndTextBox.Text;
@@ -530,7 +573,11 @@ namespace WindowsFormsApplication3
         private void genButton_Click(object sender, EventArgs e)
         {
             String data = cloocaTextBox.Text;
-            var obj = DynamicJson.Parse(data);
+  
+            try
+            {
+               var obj = DynamicJson.Parse(data);
+        
             int packet_no=1;
             String send ="[";
             //header
@@ -693,7 +740,16 @@ namespace WindowsFormsApplication3
             send += "]";    
             sndTextBox.Text=send;
             string str = string.Format("sum of matrix{0} ,sum of state{1}", sum_of_matrix, sum_of_states);
-            MessageBox.Show(str);
+           // MessageBox.Show(str);
+            Console.WriteLine(str);
+
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
+            }
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -857,8 +913,36 @@ namespace WindowsFormsApplication3
 
         }
 
-        private void btn_direct_Click(object sender, EventArgs e)
+        delegate void gotFromCloocaDelegate(string data);
+
+        internal void gotFromClooca(string data) {
+            var obj = DynamicJson.Parse(data);
+            Console.WriteLine(obj[0]["output"]);
+            cloocaTextBox.Text = obj[0]["output"];
+            genButton_Click(null, null);
+
+            cloocaLoading.Hide();
+            btn_direct.Enabled = true;
+        
+        }
+
+        delegate void errorLoadingCloocaDelegate();
+
+        internal void errorLoadingClooca() {
+            cloocaLoading.Hide();
+            btn_direct.Enabled = true;
+
+        }
+
+        delegate void startLoadingCloocaDelegate();
+
+        internal void startLoadingClooca()
         {
+            cloocaLoading.Show();
+            btn_direct.Enabled = false;
+
+        }
+        private void load_from_clooca() {
             string pkey = d_projectkey.Text;
             string branch = d_branch.Text;
             string version = d_version.Text;
@@ -866,7 +950,8 @@ namespace WindowsFormsApplication3
             string email = d_email.Text;
             string pwd = d_password.Text;
 
-            if (pkey.Length == 0) {
+            if (pkey.Length == 0)
+            {
                 MessageBox.Show("project keyを入力してください", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -883,46 +968,50 @@ namespace WindowsFormsApplication3
                 return;
             }
 
-            /*
-            pkey = "1d99c06b3a12d02c8d595ff1b2ab342d";
-            email = "kawasakitoshiya@gmail.com";
-            pwd = "nekorin1048";
-            */
-                
             String url = "http://www.clooca.com/api/dl/" + pkey + "?return_type=json";
             if (branch.Length != 0) url += "&branch=" + branch;
             if (version.Length != 0) url += "&version=" + version;
             Console.WriteLine(url);
-      
+
             //basic認証
             WebClient myweb = new WebClient();
             //認証情報
             myweb.Credentials = new NetworkCredential(email, pwd);
-
-
-
             //ダウンロード
             try
             {
+                Invoke(new startLoadingCloocaDelegate(startLoadingClooca));
                 byte[] pagedata = myweb.DownloadData(url);
 
                 //取得先のサイトに合わせた文字コード設定
                 Encoding ec = Encoding.UTF8;//UTF8の例
                 // Encoding ec = Encoding.GetEncoding("shift-jis");//シフトGISの例
                 Console.WriteLine(ec.GetString(pagedata));
-                var obj = DynamicJson.Parse(ec.GetString(pagedata));
-                Console.WriteLine(obj[0]["output"]);
-                cloocaTextBox.Text = obj[0]["output"];
-                genButton_Click(null,null);
-            }catch(WebException exc)
+
+                Invoke(new gotFromCloocaDelegate(gotFromClooca), ec.GetString(pagedata));
+               
+            }
+            catch (WebException exc)
             {
                 Console.WriteLine(exc);
-                MessageBox.Show(exc.ToString(), "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show(exc.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);;
+                Invoke(new errorLoadingCloocaDelegate(errorLoadingClooca));
             }
            
+        
+        }
+
+        private void btn_direct_Click(object sender, EventArgs e)
+        {
+          
+
+            Thread cloocaThread = new Thread(load_from_clooca);
+           
+            cloocaThread.Start();
 
 
 
+            
         }
 
       

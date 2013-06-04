@@ -73,7 +73,9 @@
             this.d_email = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.cloocaLoading = new System.Windows.Forms.PictureBox();
             this.btn_direct = new System.Windows.Forms.Button();
+            this.connectLoading = new System.Windows.Forms.PictureBox();
             this.grpSetting.SuspendLayout();
             this.grpSend.SuspendLayout();
             this.grpRecv.SuspendLayout();
@@ -81,6 +83,8 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cloocaLoading)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.connectLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // grpSetting
@@ -108,12 +112,11 @@
             // grpSend
             // 
             this.grpSend.Controls.Add(this.sndTextBox);
-            this.grpSend.Controls.Add(this.sndButton);
-            this.grpSend.Location = new System.Drawing.Point(11, 210);
+            this.grpSend.Location = new System.Drawing.Point(13, 387);
             this.grpSend.Margin = new System.Windows.Forms.Padding(4);
             this.grpSend.Name = "grpSend";
             this.grpSend.Padding = new System.Windows.Forms.Padding(4);
-            this.grpSend.Size = new System.Drawing.Size(1307, 130);
+            this.grpSend.Size = new System.Drawing.Size(1297, 65);
             this.grpSend.TabIndex = 1;
             this.grpSend.TabStop = false;
             this.grpSend.Text = "送信配列(JSON)";
@@ -125,16 +128,16 @@
             this.sndTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.sndTextBox.Multiline = true;
             this.sndTextBox.Name = "sndTextBox";
-            this.sndTextBox.Size = new System.Drawing.Size(1179, 91);
+            this.sndTextBox.Size = new System.Drawing.Size(1083, 21);
             this.sndTextBox.TabIndex = 1;
             this.sndTextBox.TextChanged += new System.EventHandler(this.sndTextBox_TextChanged);
             // 
             // sndButton
             // 
-            this.sndButton.Location = new System.Drawing.Point(1191, 93);
+            this.sndButton.Location = new System.Drawing.Point(960, 13);
             this.sndButton.Margin = new System.Windows.Forms.Padding(4);
             this.sndButton.Name = "sndButton";
-            this.sndButton.Size = new System.Drawing.Size(108, 30);
+            this.sndButton.Size = new System.Drawing.Size(152, 62);
             this.sndButton.TabIndex = 0;
             this.sndButton.Text = "送信";
             this.sndButton.UseVisualStyleBackColor = true;
@@ -143,7 +146,7 @@
             // grpRecv
             // 
             this.grpRecv.Controls.Add(this.Table);
-            this.grpRecv.Location = new System.Drawing.Point(11, 527);
+            this.grpRecv.Location = new System.Drawing.Point(13, 460);
             this.grpRecv.Margin = new System.Windows.Forms.Padding(4);
             this.grpRecv.Name = "grpRecv";
             this.grpRecv.Padding = new System.Windows.Forms.Padding(4);
@@ -169,10 +172,10 @@
             this.AD_3,
             this.AD_4,
             this.I2C});
-            this.Table.Location = new System.Drawing.Point(20, 50);
+            this.Table.Location = new System.Drawing.Point(20, 22);
             this.Table.Name = "Table";
             this.Table.RowTemplate.Height = 24;
-            this.Table.Size = new System.Drawing.Size(1266, 385);
+            this.Table.Size = new System.Drawing.Size(1266, 413);
             this.Table.TabIndex = 5;
             this.Table.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -238,10 +241,10 @@
             // 
             // connectButton
             // 
-            this.connectButton.Location = new System.Drawing.Point(641, 40);
+            this.connectButton.Location = new System.Drawing.Point(553, 20);
             this.connectButton.Margin = new System.Windows.Forms.Padding(4);
             this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(149, 30);
+            this.connectButton.Size = new System.Drawing.Size(175, 60);
             this.connectButton.TabIndex = 3;
             this.connectButton.Text = "接続";
             this.connectButton.UseVisualStyleBackColor = true;
@@ -253,7 +256,7 @@
             // 
             // export
             // 
-            this.export.Location = new System.Drawing.Point(1012, 968);
+            this.export.Location = new System.Drawing.Point(1120, 933);
             this.export.Name = "export";
             this.export.Size = new System.Drawing.Size(149, 31);
             this.export.TabIndex = 4;
@@ -263,7 +266,7 @@
             // 
             // clear
             // 
-            this.clear.Location = new System.Drawing.Point(709, 968);
+            this.clear.Location = new System.Drawing.Point(819, 933);
             this.clear.Name = "clear";
             this.clear.Size = new System.Drawing.Size(104, 31);
             this.clear.TabIndex = 5;
@@ -273,7 +276,7 @@
             // 
             // stop
             // 
-            this.stop.Location = new System.Drawing.Point(852, 968);
+            this.stop.Location = new System.Drawing.Point(989, 933);
             this.stop.Name = "stop";
             this.stop.Size = new System.Drawing.Size(107, 31);
             this.stop.TabIndex = 6;
@@ -305,7 +308,7 @@
             this.groupBox2.Controls.Add(this.clearButton);
             this.groupBox2.Controls.Add(this.cloocaTextBox);
             this.groupBox2.Controls.Add(this.genButton);
-            this.groupBox2.Location = new System.Drawing.Point(13, 88);
+            this.groupBox2.Location = new System.Drawing.Point(12, 265);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(1305, 115);
             this.groupBox2.TabIndex = 8;
@@ -353,18 +356,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(267, 975);
+            this.label2.Location = new System.Drawing.Point(262, 941);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(309, 15);
+            this.label2.Size = new System.Drawing.Size(349, 15);
             this.label2.TabIndex = 10;
-            this.label2.Text = "(c)2012 KAWASAKI Toshiya All Right Reserved.";
+            this.label2.Text = "(c)2012-2013 KAWASAKI Toshiya All Right Reserved.";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(923, 8);
+            this.startButton.Location = new System.Drawing.Point(1161, 20);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(223, 60);
+            this.startButton.Size = new System.Drawing.Size(125, 55);
             this.startButton.TabIndex = 11;
             this.startButton.Text = "START!";
             this.startButton.UseVisualStyleBackColor = true;
@@ -382,8 +385,7 @@
             this.groupBox3.Controls.Add(this.d_email);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.btn_direct);
-            this.groupBox3.Location = new System.Drawing.Point(21, 359);
+            this.groupBox3.Location = new System.Drawing.Point(21, 87);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(1289, 161);
             this.groupBox3.TabIndex = 12;
@@ -471,21 +473,44 @@
             this.label3.Text = "email";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
+            // cloocaLoading
+            // 
+            this.cloocaLoading.Image = global::WindowsFormsApplication3.Properties.Resources.loading;
+            this.cloocaLoading.Location = new System.Drawing.Point(881, 37);
+            this.cloocaLoading.Name = "cloocaLoading";
+            this.cloocaLoading.Size = new System.Drawing.Size(30, 31);
+            this.cloocaLoading.TabIndex = 11;
+            this.cloocaLoading.TabStop = false;
+            this.cloocaLoading.Visible = false;
+            // 
             // btn_direct
             // 
-            this.btn_direct.Location = new System.Drawing.Point(1190, 116);
+            this.btn_direct.Location = new System.Drawing.Point(772, 21);
             this.btn_direct.Name = "btn_direct";
-            this.btn_direct.Size = new System.Drawing.Size(75, 23);
+            this.btn_direct.Size = new System.Drawing.Size(151, 59);
             this.btn_direct.TabIndex = 0;
             this.btn_direct.Text = "GET";
             this.btn_direct.UseVisualStyleBackColor = true;
             this.btn_direct.Click += new System.EventHandler(this.btn_direct_Click);
+            // 
+            // connectLoading
+            // 
+            this.connectLoading.Image = global::WindowsFormsApplication3.Properties.Resources.loading;
+            this.connectLoading.Location = new System.Drawing.Point(682, 41);
+            this.connectLoading.Name = "connectLoading";
+            this.connectLoading.Size = new System.Drawing.Size(31, 29);
+            this.connectLoading.TabIndex = 13;
+            this.connectLoading.TabStop = false;
+            this.connectLoading.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1344, 1003);
+            this.Controls.Add(this.cloocaLoading);
+            this.Controls.Add(this.connectLoading);
+            this.Controls.Add(this.sndButton);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.label2);
@@ -495,6 +520,7 @@
             this.Controls.Add(this.stop);
             this.Controls.Add(this.clear);
             this.Controls.Add(this.export);
+            this.Controls.Add(this.btn_direct);
             this.Controls.Add(this.connectButton);
             this.Controls.Add(this.grpRecv);
             this.Controls.Add(this.grpSend);
@@ -514,6 +540,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cloocaLoading)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.connectLoading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -566,6 +594,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_direct;
         private System.Windows.Forms.TextBox d_password;
+        private System.Windows.Forms.PictureBox cloocaLoading;
+        private System.Windows.Forms.PictureBox connectLoading;
     }
 }
 
